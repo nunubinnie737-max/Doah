@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Doa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Nunito:wght@400;700&family=Amiri:wght@400&display=swap">
+<style>
+:root{--bg:#f7f0fd;--bg2:#fbe6f0;--card:rgba(255,255,255,.78);--acc2:#e58aa8;--sh:0 12px 40px rgba(124,71,201,.16);--ink:#2a1740;--mute:#85759c;--acc:#7c47c9;--soft:#e8dcf8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150c24;--bg2:#2a1233;--card:rgba(255,255,255,.06);--acc2:#f0a3b8;--sh:none;--ink:#f3eafd;--mute:#a897c2;--acc:#b78cf2;--soft:#2a1943}}
+:root[data-theme="dark"]{--bg:#150c24;--bg2:#2a1233;--card:rgba(255,255,255,.06);--acc2:#f0a3b8;--sh:none;--ink:#f3eafd;--mute:#a897c2;--acc:#b78cf2;--soft:#2a1943}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:linear-gradient(170deg,var(--bg) 0%,var(--bg2) 100%) fixed;color:var(--ink);font-family:Nunito,system-ui,sans-serif;line-height:1.6}
+.app{height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;padding:16px 24px 20px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mute);font-size:.9rem}
+.top button{background:none;border:0;color:var(--mute);font:inherit;cursor:pointer;padding:8px 0}
+main{flex:1;overflow-y:auto;display:flex;flex-direction:column;justify-content:safe center;text-align:center;padding:30px 22px;margin:14px 0;background:var(--card);border:1px solid var(--soft);border-radius:32px;box-shadow:var(--sh)}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:2rem;line-height:1.25;margin:0 0 24px}
+h1::after{content:"";display:block;width:56px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));margin:16px auto 0}
+.ar{font-family:Amiri,serif;font-size:1.8rem;line-height:2.1;direction:rtl;margin:0 0 14px;background:var(--soft);border-radius:20px;padding:14px 16px}
+.rm,.mn{color:var(--mute);font-size:.95rem;margin:0 0 6px}
+.rm{font-style:italic}
+.my{font-size:1.1rem;line-height:1.85;margin:22px 0 0;white-space:pre-line}
+.bar{display:flex;gap:12px;align-items:center}
+.nav{width:52px;height:52px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:1.3rem;cursor:pointer}
+.go{flex:1;height:54px;border-radius:27px;border:0;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;font:700 1rem Nunito,sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(124,71,201,.3)}
+.go.on{background:var(--soft);color:var(--ink);box-shadow:none}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.list{position:fixed;inset:0;background:var(--bg);padding:calc(16px + env(safe-area-inset-top,0px)) 24px 24px;overflow-y:auto;display:none}
+.list.on{display:block}
+.list .w{max-width:520px;margin:0 auto}
+.list button.i{display:flex;justify-content:space-between;width:100%;background:none;border:0;border-bottom:1px solid var(--soft);padding:14px 0;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.list .tick{color:var(--acc)}
+.list .c{background:none;border:0;color:var(--mute);font:inherit;cursor:pointer;padding:8px 0;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><span id="pos"></span><button id="menu">Senarai</button></div>
+<main id="main"></main>
+<div class="bar"><button class="nav" id="prev" aria-label="Sebelum">&#8249;</button><button class="go" id="go">Dah baca</button><button class="nav" id="next" aria-label="Seterusnya">&#8250;</button></div>
+</div>
+<div class="list" id="list"><div class="w"><button class="c" id="close">Tutup</button><div id="items"></div></div></div>
+<script>
+var D=[
+{id:"a",t:"Doa jodoh setiap hari",ar:"رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",rm:"Rabbi inni lima anzalta ilayya min khairin faqir.",mn:"Ya Tuhanku, aku sangat memerlukan apa jua kebaikan yang Engkau turunkan kepadaku.",my:"Ya Allah, aku mohon Engkau hadirkan jodoh yang baik untuk aku. Jodoh yang sayangkan aku kerana-Mu, jujur, dan bertanggungjawab. Aku akan sabar dan terus berdoa setiap hari, Ya Allah. Temukan kami pada waktu yang Engkau tahu terbaik."},
+{id:"b",t:"Doa cepat jodoh",ar:"رَبِّ يَسِّرْ وَلَا تُعَسِّرْ",rm:"Rabbi yassir wa la tu'assir.",mn:"Ya Tuhanku, permudahkanlah dan jangan Engkau sukarkan.",my:"Ya Allah, permudahkan urusan jodoh aku. Jangan Engkau sukarkan jalannya. Temukan aku dengan dia pada masa yang paling tepat, dan jika boleh, cepatkan. Bukakan hati dia untuk aku, dan bukakan hati aku untuk dia."},
+{id:"c",t:"Doa jodoh macam Moonbin 50% tahun ni",my:"Ya Allah, kurniakan aku jodoh yang rupa dan sifatnya lebih kurang 50% macam Moonbin: kacak, lembut dan penyayang. Yang paling penting dia soleh, jujur, dan sayangkan aku kerana-Mu. Temukan kami tahun ni, Ya Allah, dan permudahkan segalanya."},
+{id:"d",t:"Doa aku sambung keturunan",ar:"رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",rm:"Rabbana hab lana min azwajina wa dzurriyyatina qurrata a'yunin waj'alna lil muttaqina imama.",mn:"Ya Tuhan kami, kurniakan zuriat yang menyejukkan mata dan jadikan kami imam bagi orang bertakwa. (Al-Furqan: 74)",my:"Ya Allah, sambungkan keturunan aku. Kurniakan aku anak-anak yang soleh dan solehah, yang menyejukkan mata dan menenangkan hati aku. Jadikan zuriat aku orang yang bertakwa dan yang mendoakan aku."},
+{id:"e",t:"Doa dapat sale banyak",ar:"اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا",rm:"Allahumma barik lana fima razaqtana.",mn:"Ya Allah, berkatilah rezeki yang Engkau kurniakan kepada kami.",my:"Ya Allah, datangkan sale yang banyak pada aku. Datangkan pelanggan yang baik, yang bayar tanpa masalah dan puas hati dengan barang aku. Berkatkan setiap jualan, dan murahkan rezeki aku hari ni dan setiap hari."},
+{id:"f",t:"Doa orang beli kat website aku",ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ رِزْقًا طَيِّبًا",rm:"Allahumma inni as'aluka rizqan thayyiba.",mn:"Ya Allah, aku mohon rezeki yang baik.",my:"Ya Allah, gerakkan hati orang untuk masuk website aku, percaya dengan barang aku, dan terus beli. Mudahkan setiap order dari mula sampai bayar. Datangkan order setiap hari, Ya Allah, dan berkatkan setiap satunya."},
+{id:"w",t:"Doa jauhkan window shopper dan joy buyer",my:"Ya Allah, jauhkan window shopper and joy buyer daripada business aku. Datangkan pelanggan yang serious sahaja, yang betul-betul nak beli dan terus bayar. Mudahkan urusan jual beli aku, dan berkatkan masa dan rezeki aku, Ya Allah."},
+{id:"bb",t:"Doa meniaga baju baby keranaMu",my:"Ya Allah Ya Tuhanku, Aku Meniaga baju baby keranaMu, berikanlah ianya pahala juga pastinya apabila berniaga denganMu untung berlipat-lipat kali ganda.\n\nYa Allah kerana Engkau mengerakkan hati mereka pelanggan-pelangganku untuk membayar atas usaha ibadahku (manfaat) ini sebagai perantaraan rezeki daripadaMu untuk sampai kepadaku.\n\nTerima Kasih Ya Allah.\n\nAamiin Aamiin Ya Mujib."},
+{id:"g",t:"Doa gerakkan hati mak ayah doakan business aku",ar:"رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",rm:"Rabbi-shrah li sadri wa yassir li amri.",mn:"Ya Tuhanku, lapangkanlah dadaku dan mudahkanlah urusanku. (Taha: 25-26)",my:"Ya Allah, gerakkan hati mak dan ayah aku untuk mendoakan business aku maju. Jadikan doa mereka mustajab, dan jadikan redha mereka pembuka pintu rezeki aku. Lembutkan hati mereka, dan panjangkan umur mereka dalam sihat dan bahagia."},
+{id:"h0",t:"Doa bebas hutang",ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ",rm:"Allahumma inni a'udzu bika minal hammi wal hazan, wa a'udzu bika minal 'ajzi wal kasal, wa a'udzu bika minal jubni wal bukhl, wa a'udzu bika min ghalabatid dayn wa qahrir rijal.",mn:"Ya Allah, aku berlindung dengan-Mu daripada gundah dan sedih, lemah dan malas, pengecut dan bakhil, dan daripada bebanan hutang serta tekanan manusia. (Bukhari)",my:"Ya Allah, bebaskan aku daripada hutang. Jangan Engkau biarkan hutang menekan dan membebankan aku. Lapangkan dada aku, mudahkan jalan aku untuk langsaikan semuanya, dan cukupkan aku dengan rezeki yang halal."},
+{id:"h",t:"Doa bayar hutang mara dari hasil online business",ar:"اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ",rm:"Allahummak-fini bihalalika 'an haramika wa aghnini bifadlika 'amman siwak.",mn:"Ya Allah, cukupkan aku dengan yang halal dan kayakan aku dengan kurnia-Mu. (Tirmizi)",my:"Ya Allah, bantu aku bayar hutang mara dari hasil online business. Mudahkan jalan rezeki aku, berkatkan setiap jualan, dan jauhkan aku daripada rasa risau. Aku mohon Engkau cukupkan aku dengan yang halal."},
+{id:"i",t:"Doa syukur lepas bayar hutang",ar:"رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ",rm:"Rabbi awzi'ni an ashkura ni'mataka allati an'amta 'alayya.",mn:"Ya Tuhanku, ilhamkan aku untuk mensyukuri nikmat-Mu. (An-Naml: 19)",my:"Alhamdulillah Ya Allah, terima kasih sebab Engkau bantu aku bayar hutang aku. Terima kasih atas kekuatan dan rezeki yang Engkau beri melalui online business aku. Kekalkan nikmat ni, teruskan murahkan rezeki aku, dan jadikan aku hamba yang sentiasa bersyukur dan tak lalai."},
+{id:"m",t:"Manifesting, baca setiap hari",my:"HARI NI DAPAT 8 ORDER DARI WEBSITE\n\nHARI NI DAPAT 5 ORDER DARI WEBSITE\n\nDAPAT SUAMI MACAM MOONBIN 50% TAHUN NI\n\nHARI NI DAPAT DUIT DARI WEBSITE\n\nSETIAP HARI DAPAT REZEKI AND DUIT."}
+];
+var K="doa-v2",S={done:{}},n=0;
+try{var r=localStorage.getItem(K);if(r)S=JSON.parse(r)}catch(e){}
+function td(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function dn(){return S.done[td()]||[]}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+function show(i){
+n=(i+D.length)%D.length;var x=D[n],d=dn().indexOf(x.id)>=0;
+var h='<h1>'+esc(x.t)+'</h1>';
+if(x.ar)h+='<p class="ar" lang="ar">'+x.ar+'</p><p class="rm">'+esc(x.rm)+'</p><p class="mn">'+esc(x.mn)+'</p>';
+h+='<p class="my">'+esc(x.my)+'</p>';
+document.getElementById("main").innerHTML=h;
+var g=document.getElementById("go");g.textContent=d?"Dah baca \u2713":"Dah baca";g.className="go"+(d?" on":"");
+document.getElementById("pos").textContent=(n+1)+" / "+D.length+"  \u00b7  "+dn().length+" dibaca hari ni";
+}
+function items(){document.getElementById("items").innerHTML=D.map(function(x,i){return '<button class="i" data-i="'+i+'"><span>'+esc(x.t)+'</span><span class="tick">'+(dn().indexOf(x.id)>=0?"\u2713":"")+'</span></button>'}).join("")}
+document.getElementById("go").onclick=function(){var k=td(),l=S.done[k]||[],id=D[n].id,i=l.indexOf(id);if(i<0)l.push(id);else l.splice(i,1);S.done[k]=l;try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}show(n)};
+document.getElementById("prev").onclick=function(){show(n-1)};
+document.getElementById("next").onclick=function(){show(n+1)};
+document.getElementById("menu").onclick=function(){items();document.getElementById("list").className="list on"};
+document.getElementById("close").onclick=function(){document.getElementById("list").className="list"};
+document.getElementById("items").onclick=function(e){var b=e.target.closest("button");if(b){show(+b.dataset.i);document.getElementById("list").className="list"}};
+show(0);
+</script>
+</body>
+</html>
